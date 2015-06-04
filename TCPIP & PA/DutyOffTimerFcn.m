@@ -8,13 +8,13 @@ Timer = getappdata(hFigure,'timer');
 CurrentSpotInfo = getappdata(hFigure,'current_spot_info');
 disp(CurrentSpotInfo.off);
 ID_MAX = 112;
-DO = getappdata(hFigure,'DO');
-Phase = getappdata(hFigure,'Phase');
+% DO = getappdata(hFigure,'DO');
+% Phase = getappdata(hFigure,'Phase');
 Plan = getappdata(hFigure,'plan');
 CoolingTime = Plan.CoolingTime;
 SpotNum = Plan.SpotNum;
 DutyOn = (Plan.SonicationPeriod / PeriodUnit) .* (Plan.DutyCycle / CycleUnit);
-NumOfSonication = Plan.SonicationTime ./ DutyOn;
+NumOfSonication = Plan.SonicationTime / DutyOn;
 
 CurrentSpot = CurrentSpotInfo.spot;
 CurrentDutyOn = CurrentSpotInfo.on;
@@ -23,11 +23,10 @@ CurrentDutyOff = CurrentSpotInfo.off;
 CurrentDutyOff = CurrentDutyOff + 1;
 set(handles.status,'String',num2str(CurrentDutyOff));
 
-if CurrentDutyOff < ...
-        NumOfSonication
+if CurrentDutyOff < NumOfSonication
     set(Timer.on,'StartDelay',...
         DutyOn);
-    EnableDigitalOutput(DO);
+%     EnableDigitalOutput(DO);
     if strcmp(get(Timer.on,'Running'),'off')
         start(Timer.on);
     end
@@ -37,18 +36,17 @@ else
     CurrentSpot = CurrentSpot + 1;
     set(handles.status,'String',num2str(CurrentSpot));
     if CurrentSpot < SpotNum        
-        set(Timer.cooling,'StartDelay',...
-            CoolingTime);
+        set(Timer.cooling,'StartDelay',CoolingTime);
         if strcmp(get(Timer.cooling,'Running'),'off')
             start(Timer.cooling);
         end
-        for i=1:ID_MAX
-            SendPhaseData(DO,i - 1,...
-                          Phase(i,CurrentSpot + 1));
-            LoadPhaseData(DO);
-        end
+%         for i=1:ID_MAX
+%             SendPhaseData(DO,i - 1,...
+%                           Phase(i,CurrentSpot + 1));
+%             LoadPhaseData(DO);
+%         end
     else
-        resetTimer(Timer,DO);
+        resetTimer(Timer);
     end    
 end
 
