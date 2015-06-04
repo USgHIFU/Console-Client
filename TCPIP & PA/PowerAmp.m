@@ -65,8 +65,8 @@ setappdata(hFigure,'plan',Plan);
 
 
 % Phase Signal Generator
-% DO = InitializeDigitalOutput;                    
-% setappdata(hFigure,'DO',DO);
+DO = InitializeDigitalOutput;                    
+setappdata(hFigure,'DO',DO);
 
 % Update handles structure
 guidata(hObject, handles);
