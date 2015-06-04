@@ -9,12 +9,12 @@ CurrentSpotInfo = getappdata(hFigure,'current_spot_info');
 disp(CurrentSpotInfo.off);
 ID_MAX = 112;
 DO = getappdata(hFigure,'DO');
-Phase = getappdata(hFigure,'Phase');
+Phase = getappdata(hFigure,'phase');
 Plan = getappdata(hFigure,'plan');
 CoolingTime = Plan.CoolingTime;
 SpotNum = Plan.SpotNum;
 DutyOn = (Plan.SonicationPeriod / PeriodUnit) .* (Plan.DutyCycle / CycleUnit);
-NumOfSonication = Plan.SonicationTime / DutyOn;
+NumOfSonication = Plan.SonicationTime ./ DutyOn;
 
 CurrentSpot = CurrentSpotInfo.spot;
 CurrentDutyOn = CurrentSpotInfo.on;
