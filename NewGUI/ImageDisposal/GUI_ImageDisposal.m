@@ -78,7 +78,7 @@ else
 end
 
 % Initialize the TreatPlan class.
-TreatPlan = initTreatPlan(handles);
+TreatPlan = initTreatPlan;
 setappdata(hFigure, 'TreatPlan', TreatPlan);
 
 % Initialize the Log class.
@@ -240,18 +240,18 @@ function selectRegion_Callback(hObject, eventdata, handles)
 
 axes(handles.currentImage); % Set currentImage as axed_src.
 hFigure = handles.hFigure;
-TreatPlan = getappdata(hFigure, 'TreatPlan');
+Plan = getappdata(hFigure, 'TreatPlan');
 
 ContourHandle = selectRegion(handles);
 ContourPoints = getPosition(ContourHandle);
-if isempty(TreatPlan.ContourPoints)
-    TreatPlan.ContourPoints{1} = ContourPoints;
+if isempty(Plan.ContourPoints)
+    Plan.ContourPoints{1} = ContourPoints;
 else
-    TreatPlan.ContourPoints = [TreatPlan.ContourPoints, ContourPoints];
+    Plan.ContourPoints = [Plan.ContourPoints, ContourPoints];
 end
-TreatPlan.Angle = [TreatPlan.Angle, handles.CurAngle];
+Plan.Angle = [Plan.Angle, handles.CurAngle];
 
-setappdata(hFigure, 'TreatPlan', TreatPlan);
+setappdata(hFigure, 'TreatPlan', Plan);
 guidata(hObject,handles);
 
 
@@ -262,20 +262,20 @@ function showTP_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 hFigure = handles.hFigure;
-TreatPlan = getappdata(hFigure, 'TreatPlan');
+Plan = getappdata(hFigure, 'TreatPlan');
 
 % Generate focus coordinates and save them into appdata.
-[X, Y, ImageID] = generateFocus(handles);
-TreatPlan.FocusCenterX{ImageID} = X;
-TreatPlan.FocusCenterY{ImageID} = Y;
+[X, Y, ImageID] = generateFocus(hFigure);
+Plan.FocusCenterX{ImageID} = X;
+Plan.FocusCenterY{ImageID} = Y;
 
 % Display the focus.
 axes(handles.currentImage); % Set currentImage as axed_src.
-RectHandle = drawRectangle(TreatPlan.FocusCenterX{ImageID}, ...
-    TreatPlan.FocusCenterY{ImageID}, handles);
-TreatPlan.RectHandle{ImageID} = RectHandle;
+RectHandle = drawRectangle(Plan.FocusCenterX{ImageID}, ...
+    Plan.FocusCenterY{ImageID}, handles);
+Plan.RectHandle{ImageID} = RectHandle;
 
-setappdata(hFigure, 'TreatPlan', TreatPlan);
+setappdata(hFigure, 'TreatPlan', Plan);
 guidata(hObject,handles);
 
 
@@ -391,13 +391,15 @@ function sendPlan_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 hFigure = handles.hFigure;
-TreatPlan = getappdata(hFigure, 'TreatPlan');
+Plan = getappdata(hFigure, 'TreatPlan');
 
-Ini1X = TreatPlan.FocusCenterX{1};
-Ini1Y = TreatPlan.FocusCenterY{1};
-Angle1 = str2num(TreatPlan.Angle{1});
+Index = length(Plan.Angle);
 
-[FinX, FinY, FinZ] = convertCoordinates(Ini1X, Ini1Y, Angle1);
+IniX = Plan.FocusCenterX{Index};
+IniY = Plan.FocusCenterY{Index};
+Angle = str2num(Plan.Angle{Index}); 
+
+[FinX, FinY, FinZ] = convertCoordinates(IniX, IniY, Angle);
 
 TreatmentPlan = newTreatmentPlan;
 TreatmentPlan.SpotPosX = FinX;
@@ -405,7 +407,7 @@ TreatmentPlan.SpotPosY = FinY;
 TreatmentPlan.SpotPosZ = FinZ;
 TreatmentPlan.SpotNum = length(TreatmentPlan.SpotPosY);
 TreatmentPlan.Voltage = 5;
-TreatmentPlan.Angle = Angle1;
+TreatmentPlan.Angle = Angle;
 
 setappdata(hFigure, 'TreatmentPlan', TreatmentPlan);
 

@@ -5,9 +5,7 @@
 %   Last modified by ZHOU Bofan MAY-5-2015
 %--------------------------------------------------------------------------
 
-function TreatPlan = initTreatPlan(handles)
-
-hFigure = handles.hFigure;
+function TreatPlan = initTreatPlan
 
 TreatPlan.ContourPoints = {};
 TreatPlan.Angle = [];

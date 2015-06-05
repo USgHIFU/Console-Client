@@ -5,7 +5,7 @@
 %   Last modified by ZHOU Bofan MAY-5-2015
 %--------------------------------------------------------------------------
 
-function [FocusX, FocusY, ImageID] = generateFocus(handles)
+function [FocusX, FocusY, ImageID] = generateFocus(hFigure)
 
 % Get resolution information.
 ResolutionInfo = getResolutionInfo;
@@ -18,7 +18,6 @@ Y_grid = Ord/OrdDiv;        % 768/12 = 64
 
 Grid = createGrid;
 
-hFigure = handles.hFigure;
 TreatPlan = getappdata(hFigure, 'TreatPlan');
 
 FocusX = [];
