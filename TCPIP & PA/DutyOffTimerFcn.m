@@ -44,7 +44,7 @@ else
             LoadPhaseData(DO);
         end
     else
-        resetTimer(Timer);
+        stopSonication(hFigure);        
     end
 end
 

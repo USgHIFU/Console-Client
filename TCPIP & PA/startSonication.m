@@ -23,6 +23,8 @@ setCurrentSpotInfo(hFigure);
 CurrentSpotInfo = getappdata(hFigure,'current_spot_info');
 CurrentSpot = CurrentSpotInfo.spot;
 DO = getappdata(hFigure,'DO');
+ID_MIN = 1;
+ID_MAX = 112;
 for i=ID_MIN:ID_MAX
     SendPhaseData(DO,i-1,Phase(i,CurrentSpot + 1));
     LoadPhaseData(DO);
