@@ -16,8 +16,6 @@ function ContourHandle = selectRegion(handles)
 % has been already pressed before, delete the elder handle, then generate a 
 % new one.
 
-hFigure = handles.hFigure;
-TreatPlan = getappdata(hFigure, 'TreatPlan');
 % ContourHandle = TreatPlan.ContourHandle;
 % 
 % if ~isempty(ContourHandle)

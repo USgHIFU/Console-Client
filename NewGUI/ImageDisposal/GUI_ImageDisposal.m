@@ -163,8 +163,7 @@ hFigure = handles.hFigure;
 axes(handles.currentImage);
 Image = getappdata(hFigure, 'Image');
 
-IfPreview = get(hObject, 'Value');
-if (IfPreview)
+if (get(hObject, 'Value'))
     cla;    
     startPreview(Image.Vid);
     drawLine;    
@@ -188,7 +187,7 @@ function saveOneFrame_Callback(hObject, eventdata, handles)
 hFigure = handles.hFigure;
 
 Image = getappdata(hFigure, 'Image'); % Get video from handles.
-screen = handles.currentImage; % Set the axis to save the image.
+% Set the axis to save the image.
 
 % Save the one-frame image and change the related GUI elements.
 [Sts, Act, Err] = saveOneFrame(Image.Vid);
@@ -217,8 +216,7 @@ hFigure = handles.hFigure;
 Image = getappdata(hFigure,'Image');
 Vid = Image.Vid;
 
-IfPreview = get(hObject, 'Value');
-if (IfPreview)
+if (get(hObject, 'Value'))
     [Success, FileName, CurSts, CurAct, Err]= startVideo(Vid);
     Image.VideoName = FileName;
     setappdata(hFigure,'Image',Image);
@@ -458,7 +456,7 @@ setappdata(hFigure,'client',Client);
 if startSession(Client.Tcpip,SessionType.Command)
     set(handles.status,'String','STARTING...');
     Cmd = getCommand;
-    Success = sendCommand(Client.Tcpip,Cmd.Start);
+    Success = sendString(Client.Tcpip,Cmd.Start);
     Success = Success && finishSession(Client.Tcpip);
 else
     set(handles.status,'String','Error');
@@ -492,7 +490,7 @@ setappdata(hFigure,'client',Client);
 if startSession(Client.Tcpip,SessionType.Command)
     set(handles.status,'String','STOPPING ...');
     Cmd = getCommand;
-    Success = sendCommand(Client.Tcpip,Cmd.Stop);
+    Success = sendString(Client.Tcpip,Cmd.Stop);
     Success = Success && finishSession(Client.Tcpip);
 else
     set(handles.status,'String','Error');

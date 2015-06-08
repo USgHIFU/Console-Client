@@ -9,6 +9,6 @@ function TreatPlan = initTreatPlan
 
 TreatPlan.ContourPoints = {};
 TreatPlan.Angle = [];
-TreatPlan.RectHandle = {[], [], [], []};
-TreatPlan.FocusCenterX = {[], [], [], []};
-TreatPlan.FocusCenterY = {[], [], [], []};
+TreatPlan.RectHandle = {};
+TreatPlan.FocusCenterX = {};
+TreatPlan.FocusCenterY = {};

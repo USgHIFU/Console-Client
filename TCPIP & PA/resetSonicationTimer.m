@@ -1,4 +1,6 @@
-function resetTimer(Timer)
+function resetSonicationTimer(hFigure)
+
+Timer = getappdata(hFigure,'timer');
 
 if strcmp(get(Timer.on,'Running'),'on')
     stop(Timer.on);

@@ -12,15 +12,11 @@ Cmd = getCommand;
 switch Str
     case Cmd.Start
         disp('start');
-        StartTimer = timer('TimerFcn',{@StartTimerFcn,hFigure},...
-                           'ExecutionMode','singleShot');
-        start(StartTimer);
+        startSonication(hFigure);
         Success = true;
     case Cmd.Stop
         disp('stop');
-        StopTimer = timer('TimerFcn',{@StopTimerFcn,hFigure},...
-                          'ExecutionMode','singleShot');
-        start(StopTimer);
+        stopSonication(hFigure);
         Success = true;
     case Cmd.Pause
         
